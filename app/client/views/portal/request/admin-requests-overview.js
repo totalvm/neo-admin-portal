@@ -17,8 +17,9 @@ TemplateController('adminRequestsOverview', {
     'click .approve'(e) {
       const userId = $(e.currentTarget).data('user');
       const groupId = $(e.currentTarget).data('group');
-      
-      Meteor.call('inviteUserToGroup', groupId, userId, function(err, res)  {
+      const inviteId = $(e.currentTarget).data('id');
+  
+      Meteor.call('inviteUserToGroup', groupId, userId, inviteId, function(err, res)  {
         console.log(err, res);
         if(err || res.ok === false) {
           FlashMessages.sendError('<p class="text-center">There was an error inviting the user <br> ' + res.error + '</p>');
@@ -28,10 +29,9 @@ TemplateController('adminRequestsOverview', {
       });
     },
     'click .reject'(e) {
-      const userId = $(e.currentTarget).data('user');
-      const groupId = $(e.currentTarget).data('group');
+      const inviteId = $(e.currentTarget).data('id');
   
-      Meteor.call('rejectUserInvite', groupId, userId, function(err, res)  {
+      Meteor.call('rejectUserInvite', inviteId, function(err, res)  {
         if(err) {
           FlashMessages.sendError('<p class="text-center">There was an error rejecting the user</p>');
         } else {
