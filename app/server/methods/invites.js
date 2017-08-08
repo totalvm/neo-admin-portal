@@ -14,29 +14,31 @@ Meteor.methods({
     }
     return false;
   },
-  inviteUserToGroup(groupId, userId) {
+  inviteUserToGroup(groupId, userId, inviteId) {
     const user = Meteor.users.findOne({_id: userId});
     const apiKey = slackApiKey(user.profile.identity.team.id);
     const slackUserId = user.profile.identity.user.id;
     const invited = SlackAPI.groups.invite(apiKey, groupId, slackUserId);
     if(invited.ok) {
       Invites.update({
-        "user": slackUserId,
-        "group.id": groupId
-      }, {$set: {
-        processed: true,
-        approved: true
-      }})
+        _id: inviteId
+      }, {
+        $set: {
+          processed: true,
+          approved: true
+        }
+      });
     }
     return invited;
   },
-  rejectUserInvite(groupId, userId) {
+  rejectUserInvite(inviteId) {
     Invites.update({
-      "user.profile.identity.user.id": userId,
-      "group.id": groupId
-    }, {$set: {
-      processed: true,
-      approved: true
-    }})
+      _id: inviteId
+    }, {
+      $set: {
+        processed: true,
+        approved: false
+      }
+    });
   }
 });
