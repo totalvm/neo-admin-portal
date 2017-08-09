@@ -33,7 +33,7 @@ TemplateController('requestInvite', {
       return groups;
     },
     hasUpdated() {
-      return !!Meteor.user().profile.updatedProfile;
+      if(Meteor.user()) return !!Meteor.user().profile.updatedProfile;
     },
     hasInvite() {
       return this.state.hasGroups;
