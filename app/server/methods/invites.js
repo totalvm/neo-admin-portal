@@ -16,7 +16,7 @@ Meteor.methods({
   },
   inviteUserToGroup(groupId, userId, inviteId) {
     const user = Meteor.users.findOne({_id: userId});
-    const apiKey = slackApiKey(user.profile.identity.team.id);
+    const apiKey = (Meteor.user().services.slack.accessToken) ? Meteor.user().services.slack.accessToken : slackApiKey(user.profile.identity.team.id);
     const slackUserId = user.profile.identity.user.id;
     const invited = SlackAPI.groups.invite(apiKey, groupId, slackUserId);
     if(invited.ok) {
