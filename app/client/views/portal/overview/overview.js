@@ -52,7 +52,7 @@ TemplateController('overview', {
       return Market.findOne({id: 'neo'});
     },
     gasPrice() {
-      return Market.findOne({id: 'antcoin'});
+      return Market.findOne({id: 'gas'});
     },
     usdNeoPrice(neoAmount) {
       const neo = Market.findOne({id: 'neo'});
@@ -66,7 +66,7 @@ TemplateController('overview', {
       return currency.format(0, { code: 'USD' });
     },
     usdGasPrice(gasAmount) {
-      const anc = Market.findOne({id: 'antcoin'});
+      const anc = Market.findOne({id: 'gas'});
       if(anc) {
         const amount = anc.price_usd * gasAmount;
         if(amount >= 0) {
