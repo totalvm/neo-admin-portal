@@ -21,7 +21,7 @@ Meteor.methods({
   },
   getGasPrice() {
     try {
-      const result = HTTP.call('GET', 'https://api.coinmarketcap.com/v1/ticker/Antcoin/?convert=USD');
+      const result = HTTP.call('GET', 'https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD');
       return result.data;
     } catch (e) {
       return false;
