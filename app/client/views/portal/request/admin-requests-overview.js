@@ -1,15 +1,55 @@
 TemplateController('adminRequestsOverview', {
+  state: {
+    filter: 'pending',
+    invites: []
+  },
+  private: {
+    getStateFilter() {
+      switch(this.state.filter) {
+        case 'rejected':
+          return {processed: true, approved: false};
+        case 'successful':
+          return {processed: true, approved: true};
+        default:
+          return {processed: false, approved: false};
+      }
+    }
+  },
   onCreated() {
     this.autorun(() => {
-      Meteor.subscribe('allUnprocessedInvites');
+      Meteor.subscribe('allInvites');
+      Meteor.subscribe('users');
     });
   },
   helpers: {
     invites() {
-      return Invites.find();
+      const filteredInvites = [];
+      const invites = Invites.find(this.getStateFilter()).fetch();
+      if(invites && invites.length > 0) {
+        invites.forEach(invite => {
+          const userId = invite.user;
+          const user = Meteor.users.find({_id: userId}).fetch();
+          if (user && user.length > 0) {
+            invite.user = user[0];
+            filteredInvites.push(invite);
+          }
+        });
+      }
+      
+      return filteredInvites;
     }
   },
   events: {
+    'click button.pending'() {
+      console.log('pending')
+        this.state.filter = 'pending';
+    },
+    'click button.rejected'() {
+      this.state.filter = 'rejected';
+    },
+    'click button.successful'() {
+      this.state.filter = 'successful';
+    },
     'click .profile'(e) {
       const userId = $(e.currentTarget).data('user');
       Router.go('portal.account.view', {id: userId});
