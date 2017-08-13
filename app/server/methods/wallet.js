@@ -1,9 +1,19 @@
 Meteor.methods({
   getWalletAmount() {
     try {
-      if(Meteor.user().profile.walletAddress) {
-        const result = HTTP.call('GET', 'http://api.neonwallet.com/v1/address/balance/' + Meteor.user().profile.walletAddress);
-        return result.data;
+      const wallets = Meteor.user().profile.walletAddresses;
+      console.log(wallets);
+      if(wallets) {
+        const data = [];
+        wallets.forEach(wallet => {
+          const result = HTTP.call('GET', 'http://api.neonwallet.com/v1/address/balance/' + wallet.address);
+          data.push({
+            label: wallet.label,
+            result: result.data
+          })
+        });
+        console.log(data);
+        return data;
       } else {
         return false;
       }

@@ -7,7 +7,7 @@ TemplateController('overview', {
     getRemoteData() {
       Meteor.call('getWalletAmount', (err, res) => {
         if (!res) {
-          this.state.wallet = {NEO: 0, GAS: 0};
+          this.state.wallet = [{label: "Wallet", NEO: 0, GAS: 0}];
         } else {
           this.state.wallet = res;
         }

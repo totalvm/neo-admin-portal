@@ -9,6 +9,14 @@ html, body {
     color: #ffffff;
 }
 
+ul.list-group {
+    counter-reset: array-index;
+}
+
+.autoform-array-item-body>.panel.panel-default>.panel-heading {
+    display: none;
+}
+
 .info-box-number {
     line-height: 1em;
 }

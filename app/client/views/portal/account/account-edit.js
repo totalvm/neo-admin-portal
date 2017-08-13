@@ -9,9 +9,20 @@ TemplateController('accountEdit', {
         type: String,
         label: 'Github Username'
       },
-      "profile.walletAddress": {
-        type: String,
-        label: 'NEO Wallet Address'
+      "profile.walletAddresses": {
+        type: [
+          new SimpleSchema({
+          "label": {
+            type: String,
+            label: 'Wallet name'
+          },
+          "address": {
+            type: String,
+            label: 'Wallet address'
+          }
+        })
+        ],
+        label: 'Neon Wallet Addresses (only Neon wallet is supported as new api will be added later)'
       },
       "profile.skills": {
         type: [String],
