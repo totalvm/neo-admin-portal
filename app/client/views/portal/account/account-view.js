@@ -6,7 +6,7 @@ TemplateController('accountView', {
   },
   helpers: {
     user() {
-      const user = Meteor.users.find({"profile.info.user_id": Router.current().params.id});
+      const user = Meteor.users.findOne({"_id": Router.current().params.id});
       return user;
     }
   }
