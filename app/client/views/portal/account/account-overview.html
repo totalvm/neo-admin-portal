@@ -37,7 +37,9 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Wallet address</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">{{currentUser.profile.walletAddress}}</p>
+                        {{#each addresses}}
+                            <p class="form-control-static">{{label}}: {{address}}</p>
+                        {{/each}}
                     </div>
                 </div>
                 <div class="form-group row">
