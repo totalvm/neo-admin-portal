@@ -272,6 +272,83 @@ Router.route('/portal/bot', {
   }
 });
 
+/** Support **/
+Router.route('/portal/support', {
+  name: "support.overview",
+  title: "Overview",
+  waitOn: function () {
+    return Meteor.subscribe('loggedInUser');
+  },
+  onBeforeAction: function () {
+    if (!checkRole('user|developer|admin')) {
+      Router.go('portal.login');
+    } else {
+      this.next();
+    }
+  },
+  action: function (params, queryParams) {
+    this.render("portalLayout");
+    this.render('supportOverview', {to: 'content'});
+  }
+});
+
+Router.route('/portal/support/request', {
+  name: "support.request",
+  title: "Overview",
+  waitOn: function () {
+    return Meteor.subscribe('loggedInUser');
+  },
+  onBeforeAction: function () {
+    if (!checkRole('user|developer')) {
+      Router.go('portal.login');
+    } else {
+      this.next();
+    }
+  },
+  action: function (params, queryParams) {
+    this.render("portalLayout");
+    this.render('supportRequest', {to: 'content'});
+  }
+});
+
+Router.route('/portal/support/ticket/:id', {
+  name: "support.ticket.view",
+  title: "Overview",
+  waitOn: function () {
+    return Meteor.subscribe('loggedInUser');
+  },
+  onBeforeAction: function () {
+    if (!checkRole('user|developer|admin')) {
+      Router.go('portal.login');
+    } else {
+      this.next();
+    }
+  },
+  action: function (params, queryParams) {
+    this.render("portalLayout");
+    this.render('supportTicketView', {to: 'content'});
+  }
+});
+
+Router.route('/portal/support/admin', {
+  name: "support.request",
+  title: "Overview",
+  waitOn: function () {
+    return Meteor.subscribe('loggedInUser');
+  },
+  onBeforeAction: function () {
+    if (!checkRole('admin')) {
+      Router.go('portal.login');
+    } else {
+      this.next();
+    }
+  },
+  action: function (params, queryParams) {
+    this.render("portalLayout");
+    this.render('supportAdmin', {to: 'content'});
+  }
+});
+
 /**
  * Slack oauth
  */
